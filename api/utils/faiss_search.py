@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 
 class FaissSearch():
-    def __init__(self, embeddings_path, embedding_generator, index_to_doc_map_path):
+    def __init__(self,embedding_generator,embeddings_path, index_to_doc_map_path):
         vectors = np.load(embeddings_path)
         self.encoder = embedding_generator
         # self.database = sqlite3.connect(db_file, check_same_thread=False)
@@ -30,6 +30,10 @@ class FaissSearch():
         for index in matched_indices:
             matched_documents.append(self.index_to_doc_map[index])
 
-        image_documents = [doc for doc in matched_documents if 'image_urls/blob' in doc]
+        image_documents = [
+            {key: value for key, value in doc.items() if key != '_id'}
+            for doc in matched_documents
+            if 'image_urls/blob' in doc
+]
 
         return image_documents
