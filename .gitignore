@@ -1,0 +1,4 @@
+.env
+venv/
+api/embeddings/embeddings_with_entities.npy
+api/embeddings/index_to_doc_map.pkl
